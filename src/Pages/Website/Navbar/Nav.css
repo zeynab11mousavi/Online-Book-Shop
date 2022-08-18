@@ -1,0 +1,4 @@
+.clientNav {
+  display: flex;
+  flex-direction: column;
+}
