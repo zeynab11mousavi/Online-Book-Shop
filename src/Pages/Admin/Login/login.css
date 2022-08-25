@@ -1,0 +1,27 @@
+.login-page {
+  margin: 0;
+  padding: 0;
+  background-image: url(../../../Assets/pic/library.jpg);
+  background-position-x: center;
+  opacity: 0.6;
+  width: 100vw;
+  height: 100vh;
+}
+.login-form {
+  background-color: #fff;
+  border-radius: 30px;
+  opacity: 0.95;
+  width: 25%;
+  padding: 5rem 2rem;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 8rem;
+  right: 34rem;
+}
+.admin-login-title {
+  text-align: center;
+}
