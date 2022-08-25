@@ -1,6 +1,7 @@
+import './Nav.css'
 import * as React from 'react'
 import { AppBar, Typography, Toolbar, IconButton, Box } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../../Assets/pic/logo.png'
 import { Button } from '@mui/material'
 import { ShoppingBasket } from '@mui/icons-material'
@@ -51,13 +52,21 @@ const Navbar = (props) => {
 
   const container =
     window !== undefined ? () => window().document.body : undefined
-
+  const navigate = useNavigate()
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar color="info" component="nav">
         <Toolbar>
-          <img src={logo} alt="logo" width={50} />
+          <img
+            src={logo}
+            alt="logo"
+            width={50}
+            onClick={() => navigate('/')}
+            className="navigate-to-home"
+          />
           <Typography
+            className="navigate-to-home"
+            onClick={() => navigate('/')}
             variant="h3"
             color="primary"
             fontWeight="bold"
