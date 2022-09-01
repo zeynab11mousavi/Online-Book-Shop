@@ -1,0 +1,30 @@
+.addModal {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  position: absolute;
+  width: 700px;
+  justify-content: center;
+  align-items: center;
+  right: calc(100% - 80%);
+  background-color: rgb(95, 191, 230);
+  border-radius: 10px;
+}
+
+.addModal > * {
+  /* display: flex; */
+  border-radius: 10px;
+  width: 200px;
+  margin: 1rem;
+  background-color: #fff;
+}
+form {
+  display: flex;
+}
+
+.first-three-inputs {
+  display: flex;
+}
+.first-three-inputs > * {
+  margin: 0 1rem;
+}
