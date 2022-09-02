@@ -1,0 +1,36 @@
+.modal-for-book-deleting {
+  color: #fff;
+  background-color: #3bd1e4;
+  padding: 2rem;
+  border-radius: 10px;
+  position: absolute;
+  top: 17rem;
+  right: 40%;
+  transition: 0.9s ease;
+}
+.cancel,
+.delete {
+  border: none;
+  border-radius: 10px;
+  width: 90px;
+  padding: 5px;
+  margin: 1rem 2rem;
+  margin-top: 3rem;
+}
+.cancel {
+  background-color: rgb(211, 211, 211);
+}
+.delete {
+  background-color: rgb(244, 223, 69);
+}
+
+.cancel:hover {
+  background-color: rgb(202, 198, 198);
+}
+.delete:hover {
+  background-color: rgb(240, 225, 108);
+}
+
+.modal-for-book-deleting:hover {
+  background-color: #00acc1;
+}
