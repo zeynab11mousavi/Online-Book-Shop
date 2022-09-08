@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { fetchBooks, fetchEditBook } from '../../../Redux/books/books'
 import { ToastContainer, toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from '../../../api/http'
 import './addModal.css'
 
 // EDITOR
@@ -25,15 +26,32 @@ const EditModal = (props) => {
   const dispatch = useDispatch()
   const message = () => toast('ish')
 
-  const handleAvatar = (e) => {
+  // const handleAvatar = (e) => {
+  //   let file = e.target.files[0]
+  //   let avatar = URL.createObjectURL(file)
+  //   setThumbnail(avatar)
+  // }
+  // const handlePicture = (e) => {
+  //   let file = e.target.files[0]
+  //   let pic = URL.createObjectURL(file)
+  //   setImage(pic)
+  // }
+  const handleAvatar = async (e) => {
+    let formData = new FormData()
     let file = e.target.files[0]
-    let avatar = URL.createObjectURL(file)
-    setThumbnail(avatar)
+    formData.append('image', file)
+    await axios.post('/upload', formData).then((res) => {
+      return setThumbnail(res.data.filename)
+    })
   }
-  const handlePicture = (e) => {
+
+  const handlePicture = async (e) => {
+    let formData = new FormData()
     let file = e.target.files[0]
-    let pic = URL.createObjectURL(file)
-    setImage(pic)
+    formData.append('image', file)
+    await axios.post('/upload', formData).then((res) => {
+      return setImage(res.data.filename)
+    })
   }
 
   const handleEditBook = (e) => {

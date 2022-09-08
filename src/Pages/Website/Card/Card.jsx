@@ -10,70 +10,38 @@ import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import { URL } from '../../../config/api'
 import { useNavigate } from 'react-router-dom'
+import persian from '../../../Assets/persian.js'
 
 const CardBook = (props) => {
   const { book } = props
   const navigate = useNavigate()
-  const [added, setAdded] = useState(false)
-  const [orderQuantity, setOrderQuantity] = useState(1)
 
   return (
     <Card
       className="card-body-for-my-home-page"
-      key={book.id}
-      sx={{ m: '2rem 4rem 1rem', width: '250px', position: 'relative' }}
+      sx={{
+        m: '2rem',
+        p: '15px',
+        width: '270px',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
     >
       <CardMedia
         className="card-picture-for-my-home-page"
+        sx={{ height: '170px', width: 'auto', mb: '20px' }}
         component="img"
-        sx={{ width: '90px', margin: '1rem auto' }}
         image={`${URL}/files/${book.image}`}
         alt={`${book.name}`}
         onClick={() => navigate(`/books/${book.id}`)}
       />
-      <CardContent>
+
+      <CardContent sx={{ position: 'sticky', bottom: '20px' }}>
         <Typography>عنوان: {book.name}</Typography>
         <Typography>نویسنده: {book.author}</Typography>
-        <Typography sx={{ mb: '2rem' }}>قیمت: {book.price}</Typography>
-
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'space-between',
-            width: '100%',
-          }}
-        >
-          {added ? (
-            <Box
-              sx={{
-                width: '100%',
-                display: 'inline-flex',
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
-              }}
-            >
-              <IconButton color="primary">
-                <AddIcon />
-              </IconButton>
-              <Typography>{orderQuantity}</Typography>
-              <IconButton color="primary">
-                <RemoveIcon />
-              </IconButton>
-            </Box>
-          ) : (
-            <IconButton color="primary" onClick={() => setAdded(true)}>
-              <ShoppingBasketIcon />
-            </IconButton>
-          )}
-          <IconButton>
-            <InfoIcon
-              color="primary"
-              onClick={() => navigate(`/books/${book.id}`)}
-            />
-          </IconButton>
-        </div>
+        <Typography>قیمت: {persian(+book.price)}</Typography>
       </CardContent>
     </Card>
   )

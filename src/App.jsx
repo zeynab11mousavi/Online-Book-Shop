@@ -1,15 +1,19 @@
 import './App.css'
-import Routers from './Components/Router/Router' // PROJECT ROUTES;
-import { theme } from './Components/Assets/GeneralStyles/Theme' // PROJECT THEME;
+import Routers from './Router/Router' // PROJECT ROUTES;
+import { theme } from './Assets/Styles/Theme' // PROJECT THEME;
 import { ThemeProvider } from '@mui/material/styles'
+import { fetchOrders } from './Redux/orders/orders'
+import { Provider } from 'react-redux'
+import store from './Redux/store'
 
 function App() {
+  // fetchOrders()
   return (
-    <div className="App">
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Routers />
+        <Routers sx={{ width: '100%' }} />
       </ThemeProvider>
-    </div>
+    </Provider>
   )
 }
 

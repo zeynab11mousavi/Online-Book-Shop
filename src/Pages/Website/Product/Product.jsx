@@ -1,20 +1,36 @@
 import './product.css'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import RemoveIcon from '@mui/icons-material/Remove'
 import AddIcon from '@mui/icons-material/Add'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import { URL } from '../../../config/api'
+import persian from '../../../Assets/persian'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
-import { Paper, Typography, Box, IconButton } from '@mui/material'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import {
+  Paper,
+  Typography,
+  Box,
+  IconButton,
+  TextField,
+  Button,
+  CardMedia,
+} from '@mui/material'
 import { fetchOneBook } from '../../../Redux/books/books'
 import { fetchCategory } from '../../../Redux/category/categorySlice'
 import { fetchSubCategory } from '../../../Redux/subCategory/subCategory'
 
 const Product = () => {
   const params = useParams()
-  const [added, setAdded] = useState(false)
-  const [orderQuantity, setOrderQuantity] = useState(1)
+  const notify = (name) => toast(`${name} با موفقیت به سبد اضافه شد.`)
+  const [shoppingMood, setShoppingMood] = useState(true)
+  const [orderQuantity, setOrderQuantity] = useState(0)
   const [book, setBook] = useState('')
   const { categories } = useSelector((state) => state.categories)
   const { subCategories } = useSelector((state) => state.subCategories)
@@ -48,59 +64,192 @@ const Product = () => {
       </p>
     )
   }
-  const priceFormatter = new Intl.NumberFormat()
+
+  //******************  ADD/Remove PRODUCT TO CART  *****************//
+
+  const handleChangeOrder = (e) => {
+    if (e < book.id && e > 0) {
+      setOrderQuantity(e)
+      setShoppingMood(false)
+    }
+  }
+  const addToCart = () => {
+    // if (orderQuantity < book.quantity) {
+    //   setOrderQuantity(orderQuantity + 1)
+    // }
+    setShoppingMood(true)
+    setOrderQuantity(0)
+    const readyToAdd = {
+      name: book.name,
+      author: book.author,
+      price: book.price,
+      number: orderQuantity,
+      image: book.image,
+      id: book.id,
+    }
+
+    const basket = JSON.parse(localStorage.getItem('products')) ?? []
+    localStorage.setItem('products', JSON.stringify([...basket, readyToAdd]))
+    notify(book.name)
+  }
+
   return (
-    <Paper key={book.id}>
+    <Paper
+      className="product-page"
+      key={book.id}
+      sx={{
+        width: '100%',
+        m: '0 auto',
+        p: { xs: '5px', lg: '1rem' },
+      }}
+    >
+      <ToastContainer />
+
       <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', lg: 'row' },
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <img
-          width={'350px'}
+        <CardMedia
           alt="تصویری برای این محصول وجود ندارد"
-          src={`http://localhost:3001/files/${book.image}`}
+          image={`${URL}/files/${book.image}`}
+          component="img"
+          sx={{ width: '300px', height: 'auto' }}
         />
-        <Box sx={{ m: '1rem 3rem 1rem 0' }}>
-          <Typography sx={{ m: '1rm' }} variant="h4">
-            {book.name}
-          </Typography>
-          <Typography sx={{ m: '1rm' }} variant="h5">
-            {book.author}
-          </Typography>
-          <Typography> {book.description} </Typography>
-          <Typography sx={{ m: '1rm' }}>
-            {catAndSubcat(book.category, book.subcategory)}{' '}
-          </Typography>
-          <Typography sx={{ m: '1rm' }}>
-            {' '}
-            {priceFormatter.format(book.price)}{' '}
-          </Typography>
-          <div>
-            {added ? (
-              <Box
+        <Box
+          sx={{
+            m: '1rem 5rem',
+            width: '80%',
+            display: 'flex',
+            flexDirection: { xs: 'column', lg: 'row' },
+            justifyContent: 'space-around',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              width: { xs: '100%', lg: '60%' },
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+            }}
+          >
+            <Typography
+              sx={{
+                m: '1rm',
+                fontWeight: 'bold',
+                fontSize: { xs: '14px', lg: '20px' },
+              }}
+              color="primary"
+              variant="h6"
+            >
+              <MenuBookIcon color="primary" /> {book.name}
+            </Typography>
+            <Typography
+              sx={{ m: '1rm', fontSize: { xs: '14px', lg: '20px' } }}
+              variant="h5"
+            >
+              نویسنده: {book.author}
+            </Typography>
+
+            <Typography
+              sx={{ m: '1rm', fontSize: '18px', fontWeight: 'bold' }}
+              color="primary"
+            >
+              دسته بندی:
+            </Typography>
+            <Typography sx={{ m: '1rm', fontSize: '18px', fontWeight: 'bold' }}>
+              {catAndSubcat(book.category, book.subcategory)}{' '}
+            </Typography>
+            <Typography sx={{ m: '1rm' }}>
+              قیمت: {persian(+book.price)}{' '}
+            </Typography>
+            <div>
+              {+book.quantity === 0 ? (
+                <Typography color="primary">در انبار موجود نیست</Typography>
+              ) : (
+                <div>
+                  <TextField
+                    value={orderQuantity}
+                    type="number"
+                    onChange={(e) => handleChangeOrder(e.target.value)}
+                  />
+                  <Button disabled={shoppingMood} onClick={() => addToCart()}>
+                    اضافه کردن
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Box>
+          <Box
+            sx={{
+              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
+              width: { xs: '100%', lg: '40%' },
+            }}
+          >
+            <Box
+              sx={{
+                width: '100%',
+                height: '50%',
+                p: { lg: '30% 1rem 0' },
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+              }}
+            >
+              <Typography
+                color="primary"
                 sx={{
-                  display: 'inline-flex',
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
+                  fontWeight: 'bold',
+                  display: 'flex',
+                  cursor: 'pointer',
+                  fontSize: { xs: '14px', lg: '16px' },
                 }}
               >
-                <IconButton color="primary">
-                  <AddIcon />
-                </IconButton>
-                <Typography>{orderQuantity}</Typography>
-                <IconButton color="primary">
-                  <RemoveIcon />
-                </IconButton>
+                نظرات کاربران در مورد {book.name}
+              </Typography>
+              <Box sx={{ display: 'flex' }}>
+                <Typography
+                  color="primary"
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
+                  <IconButton>
+                    <ThumbUpIcon />
+                  </IconButton>
+                  99%
+                </Typography>
+                <Typography
+                  color="primary"
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
+                  <IconButton>
+                    <ThumbDownAltIcon />
+                  </IconButton>
+                  1%
+                </Typography>
               </Box>
-            ) : (
-              <IconButton color="primary" onClick={() => setAdded(true)}>
-                <ShoppingCartIcon />
-              </IconButton>
-            )}
-          </div>
+              <Typography
+                sx={{ mt: '1rem', fontSize: { xs: '14px', lg: '16px' } }}
+              >
+                اولین نفری باشید که نظری در باره این کتاب وارد می کند:
+              </Typography>
+              <TextField sx={{ mt: '1rem' }} />
+              <Button variant="contained" color="primary" sx={{ mt: '1rem' }}>
+                بازگشت به سایت
+              </Button>
+            </Box>
+          </Box>
         </Box>
+      </Box>
+      <Box sx={{ p: '2rem' }}>
+        <Typography color="primary" sx={{ fontWeight: 'bold' }}>
+          توضیحات:{' '}
+        </Typography>
+        <Typography> {book.description} </Typography>
       </Box>
     </Paper>
   )

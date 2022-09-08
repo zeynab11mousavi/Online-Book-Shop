@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-const AdminPanel = () => {
-  return (
-    <>
-      <h1>شما وارد پنل مدیریتی شدید</h1>
-      <h2>لطفا از طریق نو بار، تب مورد نظر خود را باز بفرمایید.</h2>
-    </>
-=======
 import admin from '../../../Assets/pic/admin.png'
 import './adminPanel.css'
 const AdminPanel = () => {
@@ -17,7 +9,6 @@ const AdminPanel = () => {
         <h2>با کلیک بر هر گزینه، وارد بخش مربوطه خواهید شد.</h2>
       </div>
     </div>
->>>>>>> Stashed changes
   )
 }
 

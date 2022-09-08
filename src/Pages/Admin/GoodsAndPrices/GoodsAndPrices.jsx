@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 import { BookOnline } from '@mui/icons-material'
->>>>>>> Stashed changes
 import {
   Table,
   TableCell,
@@ -10,21 +7,14 @@ import {
   TableRow,
   TableBody,
   TablePagination,
-<<<<<<< Updated upstream
-=======
   TextField,
   Typography,
   Button,
   Box,
->>>>>>> Stashed changes
 } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-<<<<<<< Updated upstream
-import PrimaryBtn from '../../../Components/PrimaryBtn'
-import { fetchProduct } from '../../../Redux/books/books'
-=======
 import {
   fetchAddBook,
   fetchBooks,
@@ -44,22 +34,12 @@ const mockBookForServerPutRequest = {
   subcategory: 2,
   description: ' توضیحی درباره این کتاب وجود ندارد.',
 }
->>>>>>> Stashed changes
 
 const GoodsAndPrices = () => {
   // states for managing the data to show to user;
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [goods, setGoods] = useState([])
-<<<<<<< Updated upstream
-
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchProduct())
-      .unwrap()
-      .then((res) => setGoods(res))
-  })
-=======
   const [edit, setEdit] = useState(false)
   const [tempId, setTempId] = useState()
   const [tempPrice, setTempPrice] = useState()
@@ -73,7 +53,6 @@ const GoodsAndPrices = () => {
       .unwrap()
       .then((res) => setGoods(res))
   }, [])
->>>>>>> Stashed changes
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -83,13 +62,6 @@ const GoodsAndPrices = () => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-<<<<<<< Updated upstream
-
-  return (
-    <>
-      <PrimaryBtn>ذخیره</PrimaryBtn>
-      <TableContainer>
-=======
   // :)))))))))))))))
   const [gatheredData, setGatheredData] = useState({})
 
@@ -124,7 +96,6 @@ const GoodsAndPrices = () => {
     <>
       <TableContainer>
         {edit && <Button onClick={() => handleEditData()}>ذخیره</Button>}
->>>>>>> Stashed changes
         <Table>
           <TableHead>
             <TableRow>
@@ -140,10 +111,6 @@ const GoodsAndPrices = () => {
               .map((good) => (
                 <TableRow key={good.id}>
                   <TableCell align="right">{good.name}</TableCell>
-<<<<<<< Updated upstream
-                  <TableCell align="right">{good.price}</TableCell>
-                  <TableCell align="right">{good.quantity}</TableCell>
-=======
                   <TableCell align="right">
                     <Typography
                       component="div"
@@ -192,7 +159,6 @@ const GoodsAndPrices = () => {
                       </Button>
                     </TableCell>
                   ) : null} */}
->>>>>>> Stashed changes
                 </TableRow>
               ))}
           </TableBody>

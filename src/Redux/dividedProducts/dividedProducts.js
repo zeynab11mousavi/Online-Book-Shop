@@ -11,7 +11,7 @@ const initialState = {
 // http://localhost:3001/products?subcategory=3&_page=1&_limit=10
 // GET  
 export const dividedProductWithSub = createAsyncThunk('dividedSubcategoryApi/dividedProductWithSub',
- async ({id, page}) => {
+ async ({page, id}) => {
     return axios.get(`${BOOKS}?subcategory=${id}&_page=${page}&_limit=10`)
       .then((res) => {
         return {

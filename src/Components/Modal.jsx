@@ -8,7 +8,7 @@ const Modal = (props) => {
 
   const handleRemove = (id) => {
     dispatch(fetchDeleteBook(id))
-    dispatch(fetchBooks(page))
+    dispatch(fetchBooks(1))
     setModal(false)
   }
 
