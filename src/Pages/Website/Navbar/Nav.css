@@ -5,3 +5,8 @@
 .navigate-to-home {
   cursor: pointer;
 }
+.input-navbar {
+  width: '80%';
+  margin: '0 5% 0 5%';
+  border-radius: '30%';
+}

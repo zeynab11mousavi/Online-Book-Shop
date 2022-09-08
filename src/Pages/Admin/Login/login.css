@@ -25,3 +25,12 @@
 .admin-login-title {
   text-align: center;
 }
+input[type='text']::placeholder {
+  text-align: right; /* for Chrome, Firefox, Opera */
+}
+:-ms-input-placeholder {
+  text-align: right; /* for IE 10-11 */
+}
+::-webkit-input-placeholder {
+  text-align: right; /* for IE Edge */
+}

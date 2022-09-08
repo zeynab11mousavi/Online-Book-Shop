@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import './addModal.css'
 import { URL } from '../../../config/api'
 import { useEffect } from 'react'
-// import axios from '../../../api/http'
-import axios from 'axios'
+import axios from '../../../api/http'
+// import axios from 'axios'
 // import { upload } from '@testing-library/user-event/dist/upload'
 
 const AddModal = (props) => {
@@ -34,9 +34,8 @@ const AddModal = (props) => {
   const [description, setDescription] = useState([])
   const [error, setError] = useState('')
   const dispatch = useDispatch()
-  const message = () => toast('ish')
+  const message = () => toast(':/')
 
-  // useEffect(() => {}, [total])
   const handleAddNewBook = (e) => {
     e.preventDefault()
 
@@ -57,27 +56,30 @@ const AddModal = (props) => {
         .then((res) => setTotal(res))
       if (total % 5 === 0) {
         setPage(total / 5)
-      } else setPage(Math.ceil(total / 5) + 1)
+      } else setPage(Math.ceil(total / 5))
       dispatch(fetchBooks(page))
     } else setError('!لطفا مقادیر خالی را پر نمایید.')
   }
 
-  const handleAvatar = (e) => {
+  const handleAvatar = async (e) => {
     let formData = new FormData()
-    formData.append('thumbnail', e.target.files[0])
-
-    axios
-      .post('http://localhost:3001/uploads', formData)
-      .then((res) => console.log(res))
-    // let file = e.target.files[0]
-    // let avatar = URL.createObjectURL(file)s
-    // setThumbnail(avatar)
+    let file = e.target.files[0]
+    formData.append('image', file)
+    await axios.post('/upload', formData).then((res) => {
+      return setThumbnail(res.data.filename)
+    })
   }
 
-  const handlePicture = (e) => {
+  const handlePicture = async (e) => {
+    // let file = e.target.files[0]
+    // let pic = URL.createObjectURL(file)
+    // setImage(pic)
+    let formData = new FormData()
     let file = e.target.files[0]
-    let pic = URL.createObjectURL(file)
-    setImage(pic)
+    formData.append('image', file)
+    await axios.post('/upload', formData).then((res) => {
+      return setImage(res.data.filename)
+    })
   }
 
   const makeNewBook = () => {

@@ -1,6 +1,6 @@
 import './home.css'
 import GroupCards from '../Cards/GroupCards'
-import { Typography } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,9 +16,9 @@ const Home = () => {
   const bg = ['#FFF', '#f15a7d', '#fbd67f', '#15d9a5', '#2194ba', '#073b4c']
 
   return (
-    <div className="home-page-of-my-website">
+    <Box className="home-page-of-my-website">
       {subCategories.map((subcategory) => (
-        <>
+        <Box key={`group-${subcategory.id}`}>
           <Typography
             sx={{
               color: '#fff',
@@ -31,14 +31,14 @@ const Home = () => {
               p: '10px 15rem',
             }}
             component={Link}
-            to="#"
+            to={`/${subcategory.name}`}
           >
             {subcategory.name}
           </Typography>
-          <GroupCards key={subcategory.id} subcategory={subcategory} />
-        </>
+          <GroupCards key={`${subcategory.name}`} subcategory={subcategory} />
+        </Box>
       ))}
-    </div>
+    </Box>
   )
 }
 

@@ -24,16 +24,15 @@ const GroupCards = (props) => {
     <Box sx={{ textAlign: 'center' }}>
       <Box
         sx={{
-          display: 'inline-flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
+          display: 'grid',
+          gridTemplateColumns: 'auto auto auto',
           backgroundColor: `${bg[subcat]}`,
           m: '3rem auto',
           borderRadius: '10px',
         }}
       >
         {sub1.map((book) => (
-          <CardBook book={book} key={book.id} />
+          <CardBook book={book} key={`card-${book.id}`} />
         ))}
       </Box>
     </Box>

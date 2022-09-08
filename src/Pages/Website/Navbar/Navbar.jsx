@@ -1,66 +1,42 @@
 import './Nav.css'
 import * as React from 'react'
-import { AppBar, Typography, Toolbar, IconButton, Box } from '@mui/material'
+import {
+  CardMedia,
+  AppBar,
+  Typography,
+  Toolbar,
+  IconButton,
+  Box,
+  TextField,
+} from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
-import logo from '../../../Assets/pic/logo.png'
-import { Button } from '@mui/material'
-import { ShoppingBasket } from '@mui/icons-material'
-import Divider from '@mui/material/Divider'
-import Drawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
-import MenuIcon from '@mui/icons-material/Menu'
+import bookcity from '../../../Assets/pic/bookcity.JPG'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { Search } from '@mui/icons-material'
 
-const drawerWidth = 240
-const navItems = [
-  'تاریخی',
-  'داستانی',
-  'خارجی',
-  'آموزشی',
-  'درسی',
-  'هنری',
-  'روانشناسی',
-]
-
-const Navbar = (props) => {
-  const { window } = props
-  const [mobileOpen, setMobileOpen] = React.useState(false)
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        ماتیکان
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  )
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined
+const Navbar = () => {
   const navigate = useNavigate()
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar color="info" component="nav">
+    <Box
+      sx={{
+        m: '0px',
+        display: 'flex',
+        width: { xs: '600px', lg: '100%' },
+        position: 'relative',
+      }}
+    >
+      <AppBar
+        color="info"
+        component="nav"
+        sx={{ p: { xs: '5px', lg: '1rem' } }}
+      >
         <Toolbar>
-          <img
-            src={logo}
+          <CardMedia
+            component="img"
+            image={bookcity}
             alt="logo"
-            width={50}
+            sx={{ width: { xs: '30px', lg: '45px', xl: '90px' }, ml: '5px' }}
             onClick={() => navigate('/')}
             className="navigate-to-home"
           />
@@ -70,61 +46,54 @@ const Navbar = (props) => {
             variant="h3"
             color="primary"
             fontWeight="bold"
-            sx={{ ml: '5rem' }}
+            sx={{ fontSize: { xs: '14px', lg: '26px', xl: '36px' } }}
           >
             ماتیکان
           </Typography>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+          <Box
+            sx={{
+              width: { xs: '40%', lg: '65%' },
+              m: '0 5%',
+              borderRadius: '30%',
+              position: 'relative',
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item}>{item}</Button>
-            ))}
+            <TextField placeholder="جست و جوی محصول" sx={{ width: '100%' }} />
+            <IconButton sx={{ position: 'absolute', left: '15px' }}>
+              <Search
+                color="primary"
+                sx={{
+                  fontSize: { sm: '15px', lg: '25px', xl: '35px' },
+                  m: '3px',
+                }}
+              />
+            </IconButton>
           </Box>
 
-          <Button
-            sx={{ mr: '3rem' }}
-            variant="contained"
-            component={Link}
-            to="admin-login"
-            text="info"
-          >
-            پنل مدیریت
-          </Button>
+          <Box>
+            <IconButton
+              color="primary"
+              component={Link}
+              to="/admin-login"
+              text="info"
+            >
+              <AdminPanelSettingsIcon
+                sx={{
+                  fontSize: { sm: '15px', lg: '25px', xl: '35px' },
+                }}
+              />
+            </IconButton>
 
-          <IconButton color="primary" component={Link} to="shopping-basket">
-            <ShoppingBasket />
-          </IconButton>
+            <IconButton color="primary" component={Link} to="shopping-basket">
+              <ShoppingCartIcon
+                sx={{
+                  fontSize: { sm: '15px', lg: '25px', xl: '35px' },
+                }}
+              />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
-      <Box component="nav">
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
     </Box>
   )
 }

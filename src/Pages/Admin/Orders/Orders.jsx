@@ -30,12 +30,14 @@ const Orders = () => {
   const [toggleStatus, setToggleStatus] = useState(initialToggle)
   const { orderInfo } = toggleStatus
   const dispatch = useDispatch()
+  const priceFormatter = new Intl.NumberFormat()
+  // priceFormatter.format(book.price)
 
   useEffect(() => {
     dispatch(fetchOrders())
       .unwrap()
       .then((res) => setAllOrders(res))
-  })
+  }, [])
 
   const handleDetail = (id) => {
     const orderInfo = allOrders.find((order) => order.id === id)
@@ -59,40 +61,55 @@ const Orders = () => {
       >
         تحویل داده نشده
       </Button>
-      <TableContainer>
+      <TableContainer component="div">
         <Table>
-          <TableHead className="tableBody">
-            <TableRow>
-              <TableCell align="right">وضعیت</TableCell>
-              <TableCell align="right">نام سفارش دهنده</TableCell>
-              <TableCell align="right">مجموع مبلغ</TableCell>
-              <TableCell align="right">زمان ثبت سفارش</TableCell>
-              <TableCell align="right">بررسی سفارش</TableCell>
+          <TableHead className="tableBody" component="thead">
+            <TableRow component="tr">
+              <TableCell component="td" align="right">
+                وضعیت
+              </TableCell>
+              <TableCell component="td" align="right">
+                نام سفارش دهنده
+              </TableCell>
+              <TableCell component="td" align="right">
+                مجموع مبلغ
+              </TableCell>
+              <TableCell component="td" align="right">
+                زمان ثبت سفارش
+              </TableCell>
+              <TableCell component="td" align="right">
+                بررسی سفارش
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody component="tbody">
             {allOrders.map(
               (order) =>
                 order.delivered === status && (
-                  <TableRow key={order.id}>
-                    <TableCell align="right">{order.delivered}</TableCell>
-                    <TableCell align="right">
+                  <TableRow key={order.id} component="tr">
+                    <TableCell component="td" align="right">
+                      {order.delivered}
+                    </TableCell>
+                    <TableCell component="td" align="right">
                       {`
                       ${order.username} 
                       ${order.lastname}
                     `}
                     </TableCell>
-                    <TableCell align="right">{order.prices}</TableCell>
-                    <TableCell align="right">
+                    <TableCell component="td" align="right">
+                      {priceFormatter.format(order.prices)}
+                    </TableCell>
+                    <TableCell component="td" align="right">
                       {new Date(order.createdAt).toLocaleDateString('fa')}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell component="td" align="right">
                       <Tooltip
                         TransitionComponent={Fade}
                         TransitionProps={{ timeout: 600 }}
                         title="برای مشاهده جزییات کلیک فرمایید"
                       >
                         <Typography
+                          component="p"
                           color="primary"
                           followCourser
                           onClick={() => handleDetail(order.id)}
@@ -115,45 +132,64 @@ const Orders = () => {
           >
             <CancelPresentationRoundedIcon sx={{ ml: '1rem' }} /> بستن
           </IconButton>
-          <Container>
-            <Typography>
+          <Container component="div">
+            <Typography component="p">
               {`
               نام مشتری: ${orderInfo.username}
               ${orderInfo.lastname}
               `}
             </Typography>
-            <Typography> آدرس: {orderInfo.address}</Typography>
-            <Typography>شماره تلفن: {orderInfo.phone}</Typography>
-            <Typography>
+            <Typography component="p"> آدرس: {orderInfo.address}</Typography>
+            <Typography component="p">شماره تلفن: {orderInfo.phone}</Typography>
+            <Typography component="p">
               زمان سفارش:{'       '}
               {new Date(orderInfo.createdAt).toLocaleDateString('fa')}
             </Typography>
-            <Typography>
+            <Typography component="p">
               زمان تحویل:
               {'             '}
               {new Date(orderInfo.expectAt).toLocaleDateString('fa')}
             </Typography>
           </Container>
-          <TableContainer>
-            <Table color="info">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right"> عنوان کتاب</TableCell>
-                  <TableCell align="right">نام نویسنده</TableCell>
-                  <TableCell align="right">قیمت</TableCell>
-                  <TableCell align="right">تعداد</TableCell>
-                  <TableCell align="right">قیمت کل</TableCell>
+          <TableContainer component="div">
+            <Table color="info" component="table">
+              <TableHead component="thead">
+                <TableRow component="tr">
+                  <TableCell component="td" align="right">
+                    {' '}
+                    عنوان کتاب
+                  </TableCell>
+                  <TableCell component="td" align="right">
+                    نام نویسنده
+                  </TableCell>
+                  <TableCell component="td" align="right">
+                    قیمت
+                  </TableCell>
+                  <TableCell component="td" align="right">
+                    تعداد
+                  </TableCell>
+                  <TableCell component="td" align="right">
+                    قیمت کل
+                  </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody component="tbody">
                 {orderInfo.products.map((product) => (
-                  <TableRow key={product.id}>
-                    <TableCell align="right">{product.name}</TableCell>
-                    <TableCell align="right">{product.author}</TableCell>
-                    <TableCell align="right">{product.price}</TableCell>
-                    <TableCell align="right">{product.count}</TableCell>
-                    <TableCell align="right">
-                      {product.price * product.count}
+                  <TableRow component="tr" key={product.id}>
+                    <TableCell component="td" align="right">
+                      {product.name}
+                    </TableCell>
+                    <TableCell component="td" align="right">
+                      {product.author}
+                    </TableCell>
+                    <TableCell component="td" align="right">
+                      {priceFormatter.format(product.price)}
+                    </TableCell>
+                    <TableCell component="td" align="right">
+                      {priceFormatter.format(product.count)}
+                    </TableCell>
+                    <TableCell component="td" align="right">
+                      {priceFormatter.format(product.price * product.count)}
                     </TableCell>
                   </TableRow>
                 ))}
