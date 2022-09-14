@@ -18,6 +18,8 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { ToastContainer, toast } from 'react-toastify'
+
 import { fetchBooks, header } from '../../../Redux/books/books'
 import { fetchCategory } from '../../../Redux/category/categorySlice'
 import { fetchSubCategory } from '../../../Redux/subCategory/subCategory'
@@ -127,6 +129,7 @@ const Books = () => {
           page={page}
         />
       )}
+      <ToastContainer />
       <Paper
         sx={{
           border: 0,

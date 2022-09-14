@@ -22,13 +22,17 @@ import {
   Button,
   CardMedia,
 } from '@mui/material'
+import allContexts from '../../../Context/BookStoreContext'
+import { useContext } from 'react'
 import { fetchOneBook } from '../../../Redux/books/books'
 import { fetchCategory } from '../../../Redux/category/categorySlice'
 import { fetchSubCategory } from '../../../Redux/subCategory/subCategory'
+import AddRemove from './AddRemove'
 
 const Product = () => {
   const params = useParams()
-  const notify = (name) => toast(`${name} با موفقیت به سبد اضافه شد.`)
+  const { baj, setBaj } = useContext(allContexts)
+  const notify = (name) => toast.success(`${name} با موفقیت به سبد اضافه شد.`)
   const [shoppingMood, setShoppingMood] = useState(true)
   const [orderQuantity, setOrderQuantity] = useState(0)
   const [book, setBook] = useState('')
@@ -68,7 +72,7 @@ const Product = () => {
   //******************  ADD/Remove PRODUCT TO CART  *****************//
 
   const handleChangeOrder = (e) => {
-    if (e < book.id && e > 0) {
+    if (e < book.quantity && e > 0) {
       setOrderQuantity(e)
       setShoppingMood(false)
     }
@@ -87,15 +91,16 @@ const Product = () => {
       image: book.image,
       id: book.id,
     }
-
-    const basket = JSON.parse(localStorage.getItem('products')) ?? []
-    localStorage.setItem('products', JSON.stringify([...basket, readyToAdd]))
+    setBaj(baj + 1)
+    // const basket = JSON.parse(localStorage.getItem('products')) ?? []
+    // localStorage.setItem('products', JSON.stringify([...basket, readyToAdd]))
     notify(book.name)
   }
 
   return (
     <Paper
       className="product-page"
+      component="div"
       key={book.id}
       sx={{
         width: '100%',
@@ -106,6 +111,7 @@ const Product = () => {
       <ToastContainer />
 
       <Box
+        component="div"
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', lg: 'row' },
@@ -120,6 +126,7 @@ const Product = () => {
           sx={{ width: '300px', height: 'auto' }}
         />
         <Box
+          component="div"
           sx={{
             m: '1rem 5rem',
             width: '80%',
@@ -129,6 +136,7 @@ const Product = () => {
           }}
         >
           <Box
+            component="div"
             sx={{
               display: 'flex',
               width: { xs: '100%', lg: '60%' },
@@ -137,6 +145,7 @@ const Product = () => {
             }}
           >
             <Typography
+              component="div"
               sx={{
                 m: '1rm',
                 fontWeight: 'bold',
@@ -148,6 +157,7 @@ const Product = () => {
               <MenuBookIcon color="primary" /> {book.name}
             </Typography>
             <Typography
+              component="div"
               sx={{ m: '1rm', fontSize: { xs: '14px', lg: '20px' } }}
               variant="h5"
             >
@@ -160,26 +170,21 @@ const Product = () => {
             >
               دسته بندی:
             </Typography>
-            <Typography sx={{ m: '1rm', fontSize: '18px', fontWeight: 'bold' }}>
+            <Typography
+              component="div"
+              sx={{ m: '1rm', fontSize: '18px', fontWeight: 'bold' }}
+            >
               {catAndSubcat(book.category, book.subcategory)}{' '}
             </Typography>
-            <Typography sx={{ m: '1rm' }}>
-              قیمت: {persian(+book.price)}{' '}
+            <Typography component="div" sx={{ m: '1rm' }}>
+              قیمت: {persian(+book.price)}
+              {' ریال '}
             </Typography>
             <div>
               {+book.quantity === 0 ? (
                 <Typography color="primary">در انبار موجود نیست</Typography>
               ) : (
-                <div>
-                  <TextField
-                    value={orderQuantity}
-                    type="number"
-                    onChange={(e) => handleChangeOrder(e.target.value)}
-                  />
-                  <Button disabled={shoppingMood} onClick={() => addToCart()}>
-                    اضافه کردن
-                  </Button>
-                </div>
+                <AddRemove book={book} />
               )}
             </div>
           </Box>

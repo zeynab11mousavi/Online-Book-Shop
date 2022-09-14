@@ -1,4 +1,4 @@
-import { TextField, Button, MenuItem, Select } from '@mui/material'
+import { TextField, Button, MenuItem, Select, Avatar } from '@mui/material'
 import { useState } from 'react'
 import { fetchBooks, fetchEditBook } from '../../../Redux/books/books'
 import { ToastContainer, toast } from 'react-toastify'
@@ -20,11 +20,11 @@ const EditModal = (props) => {
   const [quantity, setQuantity] = useState(tempBook.quantity)
   const [category, setCategory] = useState(tempBook.category)
   const [subcategory, setSubcategory] = useState(tempBook.subcategory)
-  const [image, setImage] = useState(tempBook.image)
-  const [thumbnail, setThumbnail] = useState(tempBook.thumbnail)
+  const [image, setImage] = useState([tempBook.image])
+  const [thumbnail, setThumbnail] = useState([tempBook.thumbnail])
   const [description, setDescription] = useState(tempBook.description)
   const dispatch = useDispatch()
-  const message = () => toast('ish')
+  const notify = (name) => toast.success(`محصول با موفقییت ویرایش شد!`)
 
   // const handleAvatar = (e) => {
   //   let file = e.target.files[0]
@@ -50,11 +50,13 @@ const EditModal = (props) => {
     let file = e.target.files[0]
     formData.append('image', file)
     await axios.post('/upload', formData).then((res) => {
-      return setImage(res.data.filename)
+      return setImage([res.data.filename])
     })
   }
 
   const handleEditBook = (e) => {
+    notify(name)
+
     e.preventDefault()
     setEditModal(false)
     dispatch(
@@ -80,81 +82,99 @@ const EditModal = (props) => {
       <ToastContainer />
 
       <form className="addModal" onSubmit={handleEditBook}>
-        <TextField
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="عنوان"
-        />
-        <TextField
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          placeholder="نویسنده"
-        />
-        <TextField
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          type="number"
-          placeholder="قیمت"
-        />
-        <TextField
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          type="number"
-          placeholder="تعداد"
-        />
-        <Select
-          label="کتگوری"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          {categories.map((category) => (
-            <MenuItem value={category.id}>{category.name}</MenuItem>
-          ))}
-        </Select>
-        <Select
-          label="کتگوری"
-          value={subcategory}
-          onChange={(e) => setSubcategory(e.target.value)}
-        >
-          {subCategories.map((subCategory) => (
-            <MenuItem value={subCategory.id}>{subCategory.name}</MenuItem>
-          ))}
-        </Select>
-        <input
-          onChange={(e) => handlePicture(e)}
-          type="file"
-          accept="image/*"
-          placeholder="تصاویر"
-        />
-        <input
+        <div className="modalAddEditPicWrapper">
+          <img
+            className="modalEditAddPic"
+            alt="تصویری برای این محصول وجود ندارد"
+            src={`http://localhost:3001/files/${image}`}
+          />
+          <input
+            onChange={(e) => handlePicture(e)}
+            type="file"
+            accept="image/*"
+            placeholder="تصاویر"
+          />
+        </div>
+        <div className="editAddModalCols">
+          <div className="firstColEditAddModal">
+            <TextField
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="عنوان"
+              sx={{ m: '1rem' }}
+            />
+            <TextField
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              placeholder="نویسنده"
+              sx={{ m: '1rem' }}
+            />
+
+            <TextField
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              type="number"
+              placeholder="قیمت"
+              sx={{ m: '1rem' }}
+            />
+          </div>
+          <div className="secondColEditAddModal">
+            <TextField
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              type="number"
+              placeholder="تعداد"
+              sx={{ m: '1rem' }}
+            />
+            <Select
+              label="کتگوری"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              sx={{ m: '1rem' }}
+            >
+              {categories.map((category) => (
+                <MenuItem value={category.id}>{category.name}</MenuItem>
+              ))}
+            </Select>
+            <Select
+              label="کتگوری"
+              value={subcategory}
+              onChange={(e) => setSubcategory(e.target.value)}
+              sx={{ m: '1rem' }}
+            >
+              {subCategories.map((subCategory) => (
+                <MenuItem value={subCategory.id}>{subCategory.name}</MenuItem>
+              ))}
+            </Select>
+          </div>
+        </div>
+
+        {/* <input
           onChange={(e) => handleAvatar(e)}
           type="file"
           accept="image/*"
           placeholder="آواتار"
-        />
-        <TextField
+        /> */}
+        <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder=" توضیحات "
+          className="addEditModalExplanation"
         />
         {/* <CK /> */}
         {/* //EDITOR */}
-
-        <Button
-          onClick={() => message()}
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
-          ذخیره
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => setEditModal(false)}
-        >
-          انصراف
-        </Button>
+        <div className="editAddModalButtonWrapper">
+          <Button variant="contained" color="primary" type="submit">
+            ذخیره
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setEditModal(false)}
+          >
+            انصراف
+          </Button>
+        </div>
       </form>
     </>
   )

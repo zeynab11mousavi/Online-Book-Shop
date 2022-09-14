@@ -38,24 +38,36 @@ const DividedProductsPage = () => {
     dispatch(dividedProductWithSub({ page, id: sub.id }))
     // dispatch(dividedProductWithSub({  currentParams._page, id: sub.id }))
   }, [page, params, sub])
-  const bg = ['#FFF', '#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#073b4c']
+  const bg = [
+    '#FFF',
+    '#00acc1',
+    '#ef476f',
+    '#ffd166',
+    '#06d6a0',
+    '#118ab2',
+    '#073b4c',
+  ]
 
   return (
-    <>
+    <div>
       <h1
         style={{
-          backgroundColor: `${bg[sub.id]}`,
           textAlign: 'center',
           borderRadius: '10px',
           padding: '10px',
         }}
       >
         <Typography
-          sx={{ color: '#fff', textDecoration: 'none', fontSize: '42px' }}
+          sx={{
+            color: `${bg[1]}`,
+            textDecoration: 'none',
+            fontSize: '36px',
+            fontWeight: 'bold',
+          }}
           component={Link}
           to={`/${params.params}`}
         >
-          {sub.name}
+          {`کتاب های گروه ${params.params}`}
         </Typography>
       </h1>
       <Box
@@ -63,7 +75,6 @@ const DividedProductsPage = () => {
           display: 'inline-flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          backgroundColor: `${bg[sub.id]}`,
           m: '3rem auto',
           borderRadius: '10px',
           textAlign: 'center',
@@ -77,7 +88,7 @@ const DividedProductsPage = () => {
       <Button onClick={() => setPage(page + 1)}>next</Button>
       <span>{page}</span>
       <Button onClick={() => setPage(page - 1)}>pre</Button>
-    </>
+    </div>
   )
 }
 

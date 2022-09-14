@@ -1,4 +1,4 @@
-import { BookOnline } from '@mui/icons-material'
+import './goodAndPrice.css'
 import {
   Table,
   TableCell,
@@ -16,7 +16,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  fetchAddBook,
+  fetchPriceAndQuantity,
   fetchBooks,
   fetchEditPriceOrQuantity,
 } from '../../../Redux/books/books'
@@ -49,7 +49,7 @@ const GoodsAndPrices = () => {
 
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchBooks())
+    dispatch(fetchPriceAndQuantity())
       .unwrap()
       .then((res) => setGoods(res))
   }, [])
@@ -65,7 +65,8 @@ const GoodsAndPrices = () => {
   // :)))))))))))))))
   const [gatheredData, setGatheredData] = useState({})
 
-  const handleEditPriceAndQuantity = (book) => {
+  const handleEditPriceAndQuantity = (e, book) => {
+    e.target.classList.add('border')
     {
       setTempPrice(book.price)
       setTempQuantity(book.quantity)
@@ -86,10 +87,14 @@ const GoodsAndPrices = () => {
       dispatch(fetchEditPriceOrQuantity({ id: keyId[i], newData: values[i] }))
     }
 
-    dispatch(fetchBooks())
+    dispatch(fetchPriceAndQuantity())
       .unwrap()
       .then((res) => setGoods(res))
     setEdit(false)
+
+    const inputs = document.getElementsByClassName('border')
+    // inputs.map((input) => input.classList.remove('border'))
+    console.log(inputs)
   }
 
   return (
@@ -112,45 +117,22 @@ const GoodsAndPrices = () => {
                 <TableRow key={good.id}>
                   <TableCell align="right">{good.name}</TableCell>
                   <TableCell align="right">
-                    <Typography
-                      component="div"
-                      onClick={() => handleEditPriceAndQuantity(good)}
-                    >
-                      {edit && good.id === tempId ? (
-                        <TextField
-                          type="number"
-                          name="price"
-                          defaultValue={good.price}
-                          onChange={(e) => setTempPrice(e.target.value)}
-                        />
-                      ) : (
-                        <Typography component="p">
-                          {priceFormatter.format(good.price)}
-                        </Typography>
-                      )}
-                    </Typography>
+                    <input
+                      type="number"
+                      id={good.id}
+                      defaultValue={good.price}
+                      onClick={(e) => handleEditPriceAndQuantity(e, good)}
+                      onChange={(e) => setTempPrice(e.target.value)}
+                    />
                   </TableCell>
                   <TableCell align="right">
-                    <Typography
-                      component="div"
-                      onClick={() => handleEditPriceAndQuantity(good)}
-                    >
-                      {edit && good.id === tempId ? (
-                        <TextField
-                          type="number"
-                          name="quantity"
-                          defaultValue={good.quantity}
-                          onChange={
-                            (e) => setTempQuantity(e.target.value)
-                            // onChange={(e) => setTempQuantity(e.target.value)
-                          }
-                        />
-                      ) : (
-                        <Typography component="p">
-                          {priceFormatter.format(good.quantity)}
-                        </Typography>
-                      )}
-                    </Typography>
+                    <input
+                      id={good.id}
+                      type="number"
+                      defaultValue={good.quantity}
+                      onClick={(e) => handleEditPriceAndQuantity(e, good)}
+                      onChange={(e) => setTempQuantity(e.target.value)}
+                    />
                   </TableCell>
                   {/* {edit && good.id === tempId ? (
                     <TableCell>
@@ -165,7 +147,8 @@ const GoodsAndPrices = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
+        sx={{ position: 'absolute', bottom: '0' }}
+        rowsPerPageOptions={[5, 10]}
         component="div"
         count={goods.length}
         rowsPerPage={rowsPerPage}

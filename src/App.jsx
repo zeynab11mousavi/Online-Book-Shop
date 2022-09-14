@@ -5,13 +5,16 @@ import { ThemeProvider } from '@mui/material/styles'
 import { fetchOrders } from './Redux/orders/orders'
 import { Provider } from 'react-redux'
 import store from './Redux/store'
+import { BookStoreDataProvider } from './Context/BookStoreContext'
 
 function App() {
   // fetchOrders()
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Routers sx={{ width: '100%' }} />
+        <BookStoreDataProvider>
+          <Routers sx={{ width: '100%' }} />
+        </BookStoreDataProvider>
       </ThemeProvider>
     </Provider>
   )

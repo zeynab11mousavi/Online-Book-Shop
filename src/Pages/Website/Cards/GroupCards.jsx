@@ -11,7 +11,15 @@ const GroupCards = (props) => {
   const [sub1, setSub1] = useState([])
   const dispatch = useDispatch()
   const [subcat, setSubcat] = useState(subcategory.id)
-  const bg = ['#FFF', '#ef476f', '#ffd166', '#06d6a0', '#118ab2', '#073b4c']
+  const bg = [
+    '#FFF',
+    '#00acc1',
+    '#ef476f',
+    '#ffd166',
+    '#06d6a0',
+    '#073b4c',
+    '#118ab2',
+  ]
 
   useEffect(() => {
     dispatch(fetchSubCategory())
