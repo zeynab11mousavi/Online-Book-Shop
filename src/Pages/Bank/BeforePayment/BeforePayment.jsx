@@ -25,7 +25,7 @@ const BeforePayment = () => {
   const [phone, setPhone] = useState()
   const [numberError, setNumberError] = useState('')
   const prices = JSON.parse(localStorage.getItem('prices'))
-  const products = JSON.parse(localStorage.getItem('products'))
+  const products = JSON.parse(localStorage.getItem('orders'))
   const pattern =
     '^([\u06F0]|[0])([\u06F9]|[9])(([\u06F0-\u06F9]|[0-9]){2})(([\u06F0-\u06F9]|[0-9]){3})(([\u06F0-\u06F9]|[0-9]){3})'
 
@@ -78,7 +78,6 @@ const BeforePayment = () => {
       delivered: false,
     }
     localStorage.setItem('finalizeOrder', JSON.stringify(finalizeOrder))
-    // console.log(finalizeOrder)
     setTimeout(() => {
       window.location.href = 'http://localhost:3002/'
     }, 0)

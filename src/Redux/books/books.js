@@ -31,6 +31,15 @@ export const fetchDeleteBook = createAsyncThunk('booksApi/fetchDeleteBook', (id)
   return axios.delete(`${BOOKS}/${id}`).then(res => res.data)
 })
 
+
+
+// GET DATA FOR PRICE AND QUANTITY 
+export const fetchPriceAndQuantity = createAsyncThunk('booksApi/fetchPriceAndQuantity', () => {
+  return axios.get(`${BOOKS}`)
+    .then((res) => res.data)})
+
+
+    
 //  EDIT PRICE OR QUANTITY
 export const fetchEditPriceOrQuantity = createAsyncThunk('booksApi/fetchEditPriceOrQuantity', ({id, newData}) => {
   return axios.patch(`${BOOKS}/${id}`, {price: newData.price, quantity: newData.quantity})

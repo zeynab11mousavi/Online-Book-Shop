@@ -10,3 +10,17 @@
   margin: '0 5% 0 5%';
   border-radius: '30%';
 }
+.baj {
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  position: absolute;
+  top: 2px;
+  left: 18px;
+  background-color: #fff;
+  border: 1px solid;
+}

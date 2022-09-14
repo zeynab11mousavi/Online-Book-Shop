@@ -1,15 +1,19 @@
 import './modal.css'
 import { useDispatch } from 'react-redux'
-import { fetchDeleteBook, fetchBooks, header } from '../Redux/books/books'
+import { toast } from 'react-toastify'
+
+import { fetchDeleteBook, fetchBooks } from '../Redux/books/books'
 
 const Modal = (props) => {
   const { tempBook, setModal, page } = props
   const dispatch = useDispatch()
+  const notify = () => toast.success('محصول با موفقیت حذف شد.')
 
   const handleRemove = (id) => {
     dispatch(fetchDeleteBook(id))
     dispatch(fetchBooks(1))
     setModal(false)
+    notify()
   }
 
   return (

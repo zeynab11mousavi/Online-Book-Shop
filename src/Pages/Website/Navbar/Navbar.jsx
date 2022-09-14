@@ -14,9 +14,12 @@ import bookcity from '../../../Assets/pic/bookcity.JPG'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Search } from '@mui/icons-material'
+import { useContext } from 'react'
+import Baj from './Baj'
 
 const Navbar = () => {
   const navigate = useNavigate()
+
   return (
     <Box
       sx={{
@@ -79,7 +82,7 @@ const Navbar = () => {
             >
               <AdminPanelSettingsIcon
                 sx={{
-                  fontSize: { sm: '15px', lg: '25px', xl: '35px' },
+                  fontSize: { sm: '15px', lg: '35px', xl: '40px' },
                 }}
               />
             </IconButton>
@@ -87,9 +90,10 @@ const Navbar = () => {
             <IconButton color="primary" component={Link} to="shopping-basket">
               <ShoppingCartIcon
                 sx={{
-                  fontSize: { sm: '15px', lg: '25px', xl: '35px' },
+                  fontSize: { sm: '15px', lg: '35px', xl: '40px' },
                 }}
               />
+              <Baj />
             </IconButton>
           </Box>
         </Toolbar>

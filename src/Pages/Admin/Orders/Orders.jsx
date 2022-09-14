@@ -15,8 +15,14 @@ import Fade from '@mui/material/Fade'
 import { Box, Container } from '@mui/system'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { fetchOrders } from '../../../Redux/orders/orders'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchOrders,
+  deliveredOrders,
+  pendingOrders,
+  handleDeliver,
+} from '../../../Redux/orders/orders'
+import persian from '../../../Assets/persian'
 import CancelPresentationRoundedIcon from '@mui/icons-material/CancelPresentationRounded'
 const initialToggle = {
   toggle: false,
@@ -25,7 +31,14 @@ const initialToggle = {
 
 const Orders = () => {
   // states for managing the data to show to user;
-  const [allOrders, setAllOrders] = useState([])
+  const { orders } = useSelector((state) => state.orders)
+  const [page, setPage] = useState(1)
+  //  PAGINATION BUTTONS
+  const [next, setNext] = useState(false)
+  const [prev, setPrev] = useState(true)
+  const [limit, setLimit] = useState(20)
+
+  const [info, setInfo] = useState('تمام سفارشات')
   const [status, setStatus] = useState('true')
   const [toggleStatus, setToggleStatus] = useState(initialToggle)
   const { orderInfo } = toggleStatus
@@ -34,14 +47,46 @@ const Orders = () => {
   // priceFormatter.format(book.price)
 
   useEffect(() => {
-    dispatch(fetchOrders())
-      .unwrap()
-      .then((res) => setAllOrders(res))
+    dispatch(fetchOrders({ page, limit }))
   }, [])
 
   const handleDetail = (id) => {
-    const orderInfo = allOrders.find((order) => order.id === id)
+    const orderInfo = orders.find((order) => order.id === id)
     setToggleStatus({ toggle: true, orderInfo })
+  }
+
+  const handleNextPage = () => {
+    // if (Math.ceil(total / limit) > page) {
+    setPage(page + 1)
+    setPrev(false)
+    // }
+    // if (Math.round(total / limit) === page) {
+    //   setNext(true)
+    // }
+  }
+  const handlePrevPage = () => {
+    // if (page > 1) {
+    setPage(page - 1)
+    setNext(false)
+    // }
+    // if (page === 2) setPrev(true)
+  }
+
+  const delivered = () => {
+    dispatch(deliveredOrders({ page, limit }))
+    setInfo('ارسال شده')
+  }
+  const pending = () => {
+    dispatch(pendingOrders({ page, limit }))
+    setInfo('در دست ارسال')
+  }
+
+  // HANDLE DELIVERED
+  const handleDelivered = (id) => {
+    const time = new Date()
+    dispatch(handleDeliver({ id, time }))
+    setToggleStatus(initialToggle)
+    dispatch(deliveredOrders({ page, limit }))
   }
 
   return (
@@ -50,24 +95,18 @@ const Orders = () => {
         sx={{ ml: '1rem' }}
         variant="contained"
         color="primary"
-        onClick={() => setStatus('true')}
+        onClick={() => delivered()}
       >
         تحویل داده شده
       </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setStatus('false')}
-      >
+      <Button variant="contained" color="primary" onClick={() => pending()}>
         تحویل داده نشده
       </Button>
       <TableContainer component="div">
+        <Typography sx={{ m: '2rem' }}>{info}</Typography>
         <Table>
           <TableHead className="tableBody" component="thead">
             <TableRow component="tr">
-              <TableCell component="td" align="right">
-                وضعیت
-              </TableCell>
               <TableCell component="td" align="right">
                 نام سفارش دهنده
               </TableCell>
@@ -83,46 +122,47 @@ const Orders = () => {
             </TableRow>
           </TableHead>
           <TableBody component="tbody">
-            {allOrders.map(
-              (order) =>
-                order.delivered === status && (
-                  <TableRow key={order.id} component="tr">
-                    <TableCell component="td" align="right">
-                      {order.delivered}
-                    </TableCell>
-                    <TableCell component="td" align="right">
-                      {`
+            {orders.map((order) => (
+              <TableRow key={order.id} component="tr">
+                <TableCell component="td" align="right">
+                  {`
                       ${order.username} 
                       ${order.lastname}
                     `}
-                    </TableCell>
-                    <TableCell component="td" align="right">
-                      {priceFormatter.format(order.prices)}
-                    </TableCell>
-                    <TableCell component="td" align="right">
-                      {new Date(order.createdAt).toLocaleDateString('fa')}
-                    </TableCell>
-                    <TableCell component="td" align="right">
-                      <Tooltip
-                        TransitionComponent={Fade}
-                        TransitionProps={{ timeout: 600 }}
-                        title="برای مشاهده جزییات کلیک فرمایید"
-                      >
-                        <Typography
-                          component="p"
-                          color="primary"
-                          followCourser
-                          onClick={() => handleDetail(order.id)}
-                        >
-                          بررسی سفارش
-                        </Typography>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ),
-            )}
+                </TableCell>
+                <TableCell component="td" align="right">
+                  {persian(order.prices)}
+                </TableCell>
+                <TableCell component="td" align="right">
+                  {new Date(order.createdAt).toLocaleDateString('fa')}
+                </TableCell>
+                <TableCell component="td" align="right">
+                  <Tooltip
+                    TransitionComponent={Fade}
+                    TransitionProps={{ timeout: 600 }}
+                    title="برای مشاهده جزییات کلیک فرمایید"
+                  >
+                    <Typography
+                      component="p"
+                      color="primary"
+                      followcourser={''}
+                      onClick={() => handleDetail(order.id)}
+                    >
+                      بررسی سفارش
+                    </Typography>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
+        {/* <Button disabled={next} onClick={handleNextPage}>
+          بعدی
+        </Button>
+        <Typography>صفحه {page}</Typography>
+        <Button disabled={prev} onClick={handlePrevPage}>
+          قبلی
+        </Button> */}
       </TableContainer>
       {toggleStatus.toggle && (
         <Box component="div" className="orderDetails">
@@ -183,22 +223,37 @@ const Orders = () => {
                       {product.author}
                     </TableCell>
                     <TableCell component="td" align="right">
-                      {priceFormatter.format(product.price)}
+                      {persian(product.price)}
                     </TableCell>
                     <TableCell component="td" align="right">
                       {priceFormatter.format(product.count)}
                     </TableCell>
                     <TableCell component="td" align="right">
-                      {priceFormatter.format(product.price * product.count)}
+                      {persian(product.price * product.count)}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <Button variant="contained" color="info" sx={{ mt: '1rem' }}>
-            تحویل داده شد
-          </Button>
+          <Box>
+            {orderInfo.delivered === true ? (
+              <Typography>
+                در تاریخ{' '}
+                {new Date(orderInfo.deliveredAt).toLocaleDateString('fa')} تحویل
+                داده شد.
+              </Typography>
+            ) : (
+              <Button
+                variant="contained"
+                color="info"
+                sx={{ mt: '1rem' }}
+                onClick={() => handleDelivered(orderInfo.id)}
+              >
+                تحویل داده شد
+              </Button>
+            )}
+          </Box>
         </Box>
       )}
     </>

@@ -8,8 +8,6 @@ import Orders from '../Pages/Admin/Orders/Orders'
 import GoodsAndPrices from '../Pages/Admin/GoodsAndPrices/GoodsAndPrices'
 import BeforePayment from '../Pages/Bank/BeforePayment/BeforePayment'
 import BankPayment from '../Pages/Bank/BankPayment/BankPayment'
-import SuccessResult from '../Pages/Bank/SuccessfullResult/SuccessfulResult'
-import RejectedResult from '../Pages/Bank/RejectedPrice/RejectedResult'
 import ClientLayout from '../Layouts/ClientLayout/ClientLayout'
 import AdminLayout from '../Layouts/AdminLayout/AdminLayout'
 import Login from '../Pages/Admin/Login/Login'
@@ -26,6 +24,7 @@ const Routers = () => {
           <Route path="books/:params" element={<Product />} />
           <Route path="shopping-basket" element={<ShoppingBasket />} />
           <Route path="before-payment" element={<BeforePayment />} />
+          <Route path="bank" element={<BankPayment />} />
         </Route>
 
         <Route element={<AdminLayout />}>
@@ -36,9 +35,6 @@ const Routers = () => {
         </Route>
 
         <Route path="admin-login" element={<Login />} />
-        <Route path="before-payment/:params" element={<BankPayment />} />
-        <Route path="successful" element={<SuccessResult />} />
-        <Route path="rejected" element={<RejectedResult />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

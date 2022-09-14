@@ -1,7 +1,9 @@
 import { Container } from '@mui/system'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../../Pages/Website/Navbar/Navbar'
+import Sidebar from '../../Pages/Website/Navbar/Sidebar'
 import Footer from '../../Pages/Website/Footer/Footer'
+import BookStoreDataProvider from '../../Context/BookStoreContext'
 
 function ClientLayout() {
   return (
@@ -15,7 +17,8 @@ function ClientLayout() {
       }}
     >
       <Navbar sx={{ width: '100%', m: '0px' }} />
-      <div style={{ marginBottom: '10rem' }}></div>
+      <div style={{ marginBottom: '12rem' }}></div>
+      <Sidebar />
       <Outlet sx={{ width: '100%' }} />
       <div style={{ marginBottom: '2rem' }}></div>
       <Footer sx={{ width: '100%' }} />

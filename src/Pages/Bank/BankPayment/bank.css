@@ -1,0 +1,46 @@
+.result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 5%;
+  margin: 5rem auto 10rem;
+}
+.button {
+  display: flex;
+}
+.success,
+.error {
+  position: absolute;
+  bottom: 26rem;
+  color: #fff;
+  border-style: none;
+  border-radius: 5px;
+  width: 120px;
+  padding: 3px;
+}
+.payment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.success {
+  right: 35rem;
+  background-color: rgb(67, 197, 67);
+}
+.error {
+  left: 50rem;
+  background-color: rgb(232, 72, 72);
+}
+.goBack {
+  background-color: rgb(21, 155, 204);
+  color: #fff;
+  border-style: none;
+  border-radius: 5px;
+  width: 120px;
+  padding: 5px;
+}
+.successMessagePic {
+  width: 350px;
+  margin-bottom: 2rem;
+}
