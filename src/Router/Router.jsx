@@ -20,10 +20,11 @@ const Routers = () => {
       <Routes>
         <Route path="/" element={<ClientLayout />}>
           <Route index element={<Home />} />
-          <Route path=":params" element={<DividedProductsPage />} />
+          <Route path="category/:params" element={<DividedProductsPage />} />
           <Route path="books/:params" element={<Product />} />
           <Route path="shopping-basket" element={<ShoppingBasket />} />
           <Route path="before-payment" element={<BeforePayment />} />
+          {/* RESULT */}
           <Route path="bank" element={<BankPayment />} />
         </Route>
 

@@ -14,7 +14,11 @@ const DeleteModal = (props) => {
     //   }
     // })
     setOrders(orders.filter((order) => order.id !== currentItem.id))
-    localStorage.setItem('orders', JSON.stringify(orders))
+    const updateAfterDelete = orders.filter(
+      (order) => order.id !== currentItem.id,
+    )
+    console.log(orders)
+    localStorage.setItem('orders', JSON.stringify(updateAfterDelete))
     notify(currentItem.name)
     const updatedTotal = total - currentItem.price * currentItem.number
     const totalElement = document.getElementById('total')

@@ -77,25 +77,6 @@ const Product = () => {
       setShoppingMood(false)
     }
   }
-  const addToCart = () => {
-    // if (orderQuantity < book.quantity) {
-    //   setOrderQuantity(orderQuantity + 1)
-    // }
-    setShoppingMood(true)
-    setOrderQuantity(0)
-    const readyToAdd = {
-      name: book.name,
-      author: book.author,
-      price: book.price,
-      number: orderQuantity,
-      image: book.image,
-      id: book.id,
-    }
-    setBaj(baj + 1)
-    // const basket = JSON.parse(localStorage.getItem('products')) ?? []
-    // localStorage.setItem('products', JSON.stringify([...basket, readyToAdd]))
-    notify(book.name)
-  }
 
   return (
     <Paper

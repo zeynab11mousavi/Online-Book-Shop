@@ -1,6 +1,6 @@
 const persian = (n) => {
-  // return n.toLocaleString("fa-IR")
-  return n
+  return n.toLocaleString("fa-IR")
+  // return n
 }
 export default persian;
 

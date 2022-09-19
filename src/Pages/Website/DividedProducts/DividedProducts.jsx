@@ -65,7 +65,7 @@ const DividedProductsPage = () => {
             fontWeight: 'bold',
           }}
           component={Link}
-          to={`/${params.params}`}
+          to={`/category/${params.params}`}
         >
           {`کتاب های گروه ${params.params}`}
         </Typography>

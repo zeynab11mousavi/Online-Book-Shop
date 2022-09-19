@@ -63,10 +63,12 @@ const Login = () => {
         <h3 className="admin-login-title">
           لطفا نام کاربری <br />و رمز عبور خود را وارد نمایید
         </h3>
+        <Typography sx={{ mt: '3rem' }} color="primary">
+          نام کاربری:
+        </Typography>
         <TextField
-          sx={{ mt: '3rem', align: 'right' }}
+          sx={{ mt: '1rem', align: 'right' }}
           className="admin-login-input"
-          label="نام کاربری"
           fullWidth
           value={username}
           onChange={handleChangeUserName}
@@ -74,11 +76,13 @@ const Login = () => {
         <Typography variant="p" color="error">
           {nameError}{' '}
         </Typography>
+        <Typography color="primary" sx={{ mt: 2 }}>
+          رمز عبور:
+        </Typography>
         <TextField
-          sx={{ mt: 2, textAlign: 'right' }}
+          sx={{ mt: '1rem' }}
           type="password"
           className="admin-login-input"
-          label="رمز عبور"
           fullWidth
           value={password}
           onChange={handleChangePass}
