@@ -131,7 +131,8 @@ const Orders = () => {
                     `}
                 </TableCell>
                 <TableCell component="td" align="right">
-                  {persian(order.prices)}
+                  {/* ***************************** */}
+                  {order.prices}
                 </TableCell>
                 <TableCell component="td" align="right">
                   {new Date(order.createdAt).toLocaleDateString('fa')}
@@ -156,13 +157,13 @@ const Orders = () => {
             ))}
           </TableBody>
         </Table>
-        {/* <Button disabled={next} onClick={handleNextPage}>
+        <Button disabled={next} onClick={handleNextPage}>
           بعدی
         </Button>
         <Typography>صفحه {page}</Typography>
         <Button disabled={prev} onClick={handlePrevPage}>
           قبلی
-        </Button> */}
+        </Button>
       </TableContainer>
       {toggleStatus.toggle && (
         <Box component="div" className="orderDetails">
@@ -180,16 +181,18 @@ const Orders = () => {
               `}
             </Typography>
             <Typography component="p"> آدرس: {orderInfo.address}</Typography>
-            <Typography component="p">شماره تلفن: {orderInfo.phone}</Typography>
+            <Typography component="p">
+              شماره تلفن: {persian(orderInfo.phone).toLocaleString('fa')}
+            </Typography>
             <Typography component="p">
               زمان سفارش:{'       '}
               {new Date(orderInfo.createdAt).toLocaleDateString('fa')}
             </Typography>
-            <Typography component="p">
+            {/* <Typography component="p">
               زمان تحویل:
               {'             '}
               {new Date(orderInfo.expectAt).toLocaleDateString('fa')}
-            </Typography>
+            </Typography> */}
           </Container>
           <TableContainer component="div">
             <Table color="info" component="table">
@@ -208,9 +211,6 @@ const Orders = () => {
                   <TableCell component="td" align="right">
                     تعداد
                   </TableCell>
-                  <TableCell component="td" align="right">
-                    قیمت کل
-                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody component="tbody">
@@ -223,13 +223,14 @@ const Orders = () => {
                       {product.author}
                     </TableCell>
                     <TableCell component="td" align="right">
-                      {persian(product.price)}
+                      {persian(product.price).toLocaleString('fa-IR')}
                     </TableCell>
                     <TableCell component="td" align="right">
-                      {priceFormatter.format(product.count)}
-                    </TableCell>
-                    <TableCell component="td" align="right">
-                      {persian(product.price * product.count)}
+                      {product.count ? (
+                        <span>{product.count.toLocaleString('fa')}</span>
+                      ) : (
+                        <span>{product.number.toLocaleString('fa')}</span>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

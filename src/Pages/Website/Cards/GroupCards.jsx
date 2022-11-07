@@ -8,7 +8,7 @@ import CardBook from '../Card/Card'
 
 const GroupCards = (props) => {
   const { subcategory } = props
-  const [sub1, setSub1] = useState([])
+  const [sub, setSub] = useState([])
   const dispatch = useDispatch()
   const [subcat, setSubcat] = useState(subcategory.id)
   const bg = [
@@ -26,7 +26,7 @@ const GroupCards = (props) => {
     dispatch(fetchCategory())
     dispatch(getWithSubcategory(subcat))
       .unwrap()
-      .then((res) => setSub1(res))
+      .then((res) => setSub(res))
   }, [])
   return (
     <Box sx={{ textAlign: 'center' }}>
@@ -39,7 +39,7 @@ const GroupCards = (props) => {
           borderRadius: '10px',
         }}
       >
-        {sub1.map((book) => (
+        {sub.map((book) => (
           <CardBook book={book} key={`card-${book.id}`} />
         ))}
       </Box>

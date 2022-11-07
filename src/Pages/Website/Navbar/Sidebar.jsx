@@ -177,7 +177,7 @@ function Sidebar(props) {
                 key={item.id}
                 sx={{ color: '#fff' }}
                 component={Link}
-                to={`${item.name}`}
+                to={`/category/${item.name}`}
               >
                 {item.name}
               </Button>

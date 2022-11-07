@@ -59,7 +59,7 @@ const Home = () => {
               textDecorationLine: 'none',
             }}
             component={Link}
-            to={`/${subcategory.name}`}
+            to={`/category/${subcategory.name}`}
           >
             {`کتاب های گروه ${subcategory.name}`}
           </Typography>

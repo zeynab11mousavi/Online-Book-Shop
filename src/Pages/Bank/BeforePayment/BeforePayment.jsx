@@ -101,36 +101,27 @@ const BeforePayment = () => {
         autoComplete="off"
         onSubmit={(e) => handleSubmit(e)}
       >
+        <Typography color="primary">نام:</Typography>
+
         <TextField
-          label="نام  "
           value={username}
           onChange={handleChangeUsername}
           sx={{ my: 2 }}
         />
         <Typography color="error">{usernameError}</Typography>
-
+        <Typography color="primary">نام خانوداگی:</Typography>
         <TextField
-          label="نام و نام خانوداگی"
           value={lastname}
           onChange={handleChangeLastName}
           sx={{ my: 2 }}
         />
         <Typography color="error">{lastNameError}</Typography>
+        <Typography color="primary">شماره همراه:</Typography>
 
-        <Select color="primary" label="انتخاب نوع پست">
-          <MenuItem>پست سفارشی</MenuItem>
-          <MenuItem>پست پیشتاز</MenuItem>
-        </Select>
-
-        <TextField
-          label="شماره همراه"
-          onChange={handleChangeNumber}
-          type="phone"
-          sx={{ my: 2 }}
-        />
+        <TextField onChange={handleChangeNumber} type="phone" sx={{ my: 2 }} />
         <Typography color="error">{numberError}</Typography>
-
-        <TextField label="آدرس" onChange={handleChangeAddress} sx={{ my: 2 }} />
+        <Typography color="primary">آدرس:</Typography>
+        <TextField onChange={handleChangeAddress} sx={{ my: 2 }} />
         <Typography color="error">{addressError}</Typography>
 
         <Button disabled={activeBtn} variant="contained" type="submit">

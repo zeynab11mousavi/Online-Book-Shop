@@ -23,10 +23,9 @@ const AddRemove = (props) => {
   const firstAddToCart = (id) => {
     setAdded(true)
     setOrderQuantity(1)
-    // console.log('prevOrders', prevOrders, 'orders', orders)
+
     const allIds = []
     orders.map((order) => allIds.push(order.id))
-    console.log(allIds)
     if (orders.length === 0) {
       setOrders([...orders, { ...newOrder, number: 1 }])
       localStorage.setItem(
@@ -36,13 +35,15 @@ const AddRemove = (props) => {
       setBaj(baj + 1)
     } else if (orders.length > 0 && allIds.includes(book.id)) {
       orders.find((order) =>
-        +order.id === +book.id ? order.number++ : order.number,
+        +order.id === +book.id ? ++order.number : order.number,
       )
       localStorage.setItem('orders', JSON.stringify(orders))
-      setBaj(baj + 1)
     } else if (orders.length > 0) {
-      setOrders([...orders, { ...newOrder, number: 1 }])
-      localStorage.setItem('orders', JSON.stringify(orders))
+      // setOrders([...orders, { ...newOrder, number: 1 }])
+      localStorage.setItem(
+        'orders',
+        JSON.stringify([...orders, { ...newOrder, number: 1 }]),
+      )
       setBaj(baj + 1)
     }
   }
