@@ -1,0 +1,14 @@
+.card-picture-for-my-home-page:hover {
+  transition: 0.9s ease;
+  filter: opacity(60%);
+}
+.home-page-of-my-website {
+  width: 100%;
+  text-align: center;
+}
+.card-picture-for-my-home-page {
+  cursor: pointer;
+}
+.home-page-of-my-website > * {
+  border-radius: 15px;
+}

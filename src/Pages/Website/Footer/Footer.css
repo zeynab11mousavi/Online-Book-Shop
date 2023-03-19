@@ -1,0 +1,33 @@
+.footerContainer {
+  /* position: absolute; */
+  /* bottom: 10px;
+  width: 1200px; */
+}
+.clientFooter {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+p {
+  /* width: fit-content; */
+  font-size: 12px;
+}
+.suggestionLists {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 2rem 0;
+}
+.suggestion {
+  margin-bottom: 1rem;
+  background-color: #fefefe;
+}
+.suggestionLists > div {
+  padding: 3rem;
+  /* background-color: #d3d3d3; */
+  box-shadow: 1px 1px 1px 1px #ede9e9;
+}
+h5,
+h3 {
+  color: #444646;
+}

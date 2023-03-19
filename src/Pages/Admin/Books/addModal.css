@@ -1,0 +1,66 @@
+.addModal {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  position: absolute;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  right: calc(100% - 65%);
+  background: linear-gradient(
+    to top left,
+    rgb(50, 178, 217),
+    rgb(101, 204, 241)
+  );
+  border-radius: 10px;
+}
+
+.editAddModalCols {
+  display: flex;
+}
+
+.firstColEditAddModal > *,
+.secondColEditAddModal > * {
+  width: 150px;
+  color: rgb(92, 91, 91);
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.firstColEditAddModal,
+.secondColEditAddModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modalAddEditPicWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.modalEditAddPic {
+  width: 120px;
+  height: auto;
+  border-radius: 10px;
+}
+.editAddModalButtonWrapper {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin: 0 0 10px 0;
+}
+.editAddModalButtonWrapper > * {
+  width: 45%;
+  color: #fff;
+}
+.addEditModalExplanation {
+  width: 90%;
+  height: 100px;
+  color: rgb(92, 91, 91);
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 10px 0 20px;
+}

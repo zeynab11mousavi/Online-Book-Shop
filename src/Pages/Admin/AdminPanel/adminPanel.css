@@ -1,0 +1,22 @@
+.adminPanelContainer {
+  width: 100%;
+  display: flex;
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(rgb(239, 225, 200), rgb(216, 192, 158));
+}
+.adminPanelPic {
+  width: 40%;
+}
+
+.adminTitlesWrapper {
+  width: fit-content;
+  height: 120px;
+  padding: 50px;
+  color: #fff;
+  border-radius: 10px;
+  position: absolute;
+  right: 7rem;
+  bottom: 1rem;
+  background: linear-gradient(rgb(134, 196, 251), rgb(64, 188, 250));
+}
